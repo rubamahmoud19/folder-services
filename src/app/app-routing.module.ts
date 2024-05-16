@@ -9,7 +9,7 @@ const routes: Routes = [
   // { path: '', component: AppComponent, pathMatch: "full" },
   { path: 'filesReader', component: FilesReaderComponent, pathMatch: "full" },
   { path: 'videoPlayer', component: VideoPlayerComponent, pathMatch: "full" },
-  { path: 'filesTree', component: FilesTreeComponent, pathMatch: "full" },
+  { path: '', component: FilesTreeComponent, pathMatch: "full" },
 ];
 
 @NgModule({

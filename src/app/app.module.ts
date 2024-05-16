@@ -14,7 +14,9 @@ import {MatTreeNestedDataSource, MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
-
+import {TreeModule} from 'primeng/tree';
+import {ButtonModule} from 'primeng/button';
+// import {TreeNode} from 'primeng/api';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +35,8 @@ import { HttpClientModule } from '@angular/common/http';
     FilesReaderComponent,
     VideoPlayerComponent,
     FilesTreeComponent,
-    HttpClientModule
+    HttpClientModule,
+    TreeModule,
   ],
 
   exports: [

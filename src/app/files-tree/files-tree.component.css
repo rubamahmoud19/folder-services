@@ -1,17 +1,8 @@
+@import "primeicons/primeicons.css";
 .full-height{
   height: 100%;
 }
 
-.tree {
-  position: relative;
-  background: white;
-  /* margin-top: 20px; */
-  /* padding: 30px; */
-  font-family: monospace;
-  font-size: 85rem;
-  font-weight: 400;
-  line-height: 1.5;
-}
 
 .tree .fa-folder-open, .tree .fa-folder {
   color: #54aeff;
@@ -87,4 +78,14 @@ div.vertical-line{
   float: left; /* Causes the line to float to left of content. 
     You can instead use position:absolute or display:inline-block
     if this fits better with your design */
+} */
+
+/* {
+  border: none;
+} */
+
+.tree-component{
+  .p-tree.p-component{
+    border: none !important;
+  }
 }
