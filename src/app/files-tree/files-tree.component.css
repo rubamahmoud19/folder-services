@@ -1,0 +1,90 @@
+.full-height{
+  height: 100%;
+}
+
+.tree {
+  position: relative;
+  background: white;
+  /* margin-top: 20px; */
+  /* padding: 30px; */
+  font-family: monospace;
+  font-size: 85rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.tree .fa-folder-open, .tree .fa-folder {
+  color: #54aeff;
+}
+
+.tree .fa-html5{
+  color:#f21f10;
+}
+
+.tree ul{
+  padding-left: 5px;
+  list-style: none;
+}
+.tree li {
+  display: block;
+}
+
+.tree ul li{
+  position: relative;
+  /* padding-top: 5px; */
+  padding-bottom: 5px;
+  padding-left: 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing:border-box;
+  box-sizing: border-box;
+  list-style: none;
+  color: #919396;
+}
+
+
+.tree ul li:before{
+  position: absolute;
+  top:15px;
+  left:0;
+  width: 10px;
+  height:1px;
+  margin:auto;
+  content:'';
+  background-color: #666;
+}
+
+
+.tree ul li:after{
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left:0;
+  width:1px;
+  height:100%;
+  content:'';
+  background-color: #666;
+}
+
+.tree ul li:last-child:after{
+  height:15px;
+}
+
+.tree ul a{
+  cursor: pointer;
+}
+
+.tree ul a:hover{
+  text-decoration: none;
+}
+
+.border-right{
+  border-right: 1px solid #dbe1e7;
+}
+div.vertical-line{
+  width: 1px; /* Line width */
+  background-color: #dbe1e7; /* Line color */
+  height: 100%; /* Override in-line if you want specific height. */
+  float: left; /* Causes the line to float to left of content. 
+    You can instead use position:absolute or display:inline-block
+    if this fits better with your design */
+}

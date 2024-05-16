@@ -1,0 +1,59 @@
+
+
+
+<div class="grid grid-nogutter surface-section text-800  full-height">
+  <div class="col-12 md:col-3 p-6 text-center md:text-left flex border-right full-height" >
+      <section>
+        <div class="tree">
+          <mat-tree [treeControl]="treeControl" [dataSource]="dataSource">
+            <ul style="list-style: none;">
+              <ul style="list-style: none;">
+                <mat-tree-node *matTreeNodeDef="let node;when:hasChild" matTreeNodePadding #container>
+                  <li matTreeNodeToggle [attr.atria-label]="'Toggle'+'node.name'">
+                    <i class="fa {{treeControl.isExpanded(node) ? 'fa-folder-open' : 'fa-folder'}}" >
+                    <!-- <button matTreeNodeToggle [attr.atria-label]="'Toggle'+'node.name'"> -->
+                      <!-- <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                      </mat-icon> -->
+                    <!-- </button> -->
+                    </i>
+                    {{node.name}}
+                  </li>
+                  <i (click)="createFolder(node)" class="fa-solid fa-folder-plus p-4"></i>
+                  <i class="fa-solid fa-file-arrow-up"></i>
+                  <!-- <button (click)="loadComponent(node)">Load {{node.name}}</button> -->
+                </mat-tree-node>
+                <ul style="list-style: none;">
+                  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+                    <li (click)="loadComponent(node)" matTreeNodeToggle><i class="fa-solid {{node.type == 'media' ? 'fa-photo-film' : 'fa-file-pdf'}}"></i>
+                      <!-- <button mat-icon-button disabled></button> -->
+                      <!-- <button (click)="loadComponent(node)">{{node.name}}</button> -->
+                      {{node.name}}
+                    </li>
+                  </mat-tree-node>
+                </ul>
+              </ul>
+            </ul>
+          </mat-tree>
+        </div>
+      </section>
+  </div>
+  <!-- <div class = "vertical-line"></div> -->
+  <div class="col-12 md:col-8 p-6 flex align-items-top overflow-hidden">
+      <div>
+        <ng-container #outlet >
+        </ng-container>
+      </div>
+
+      <ng-template *ngIf='loadComponentChild' #container2>
+        <div *ngIf='componentChildType  === "file";else mediaReader'>
+          <app-files-reader [externalSource]="passedData"></app-files-reader>
+        </div>
+      </ng-template>
+
+      <ng-template #container2 #mediaReader>
+        <app-video-player [externalSource]="passedData"></app-video-player>
+      </ng-template>
+  </div>
+</div>
+
