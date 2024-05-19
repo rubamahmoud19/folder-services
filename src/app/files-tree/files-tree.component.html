@@ -4,24 +4,29 @@
 <div class="grid grid-nogutter surface-section text-800  full-height">
   <div class="col-12 md:col-3 p-6 text-center md:text-left flex border-right full-height" >
       <section>
-        <div class="tree">
-          <!-- <mat-tree [treeControl]="treeControl" [dataSource]="dataSource"> -->
-            <p-tree [value]="files1" class="tree-component" ></p-tree>
-        </div>
+            <p-tree 
+            [value]="files1" 
+            selectionMode="single"
+            [(selection)]="selectedFile"
+            (onNodeSelect)="nodeSelect($event)" />
       </section>
   </div>
   <!-- <div class = "vertical-line"></div> -->
-  <div class="col-12 md:col-8 p-6 flex align-items-top overflow-hidden">
-      <!-- <div>
-        <ng-container #outlet >
-        </ng-container>
-      </div> -->
+  <div class="col-12 md:col-6 p-6 flex align-items-top overflow-hidden">
+    <div>
+      <ng-container #outlet >
+      </ng-container>
+    </div>
 
-     
+    <ng-template  #container2>
+      <div *ngIf='componentChildType  === "file";else mediaReader'>
+        <app-files-reader [externalSource]="passedData"></app-files-reader>
+      </div>
+    </ng-template>
 
-      <!-- <ng-template #container2 #mediaReader>
-        <app-video-player [externalSource]="passedData"></app-video-player>
-      </ng-template> -->
-  </div>
+    <ng-template #container2 #mediaReader>
+      <app-video-player [externalSource]="passedData"></app-video-player>
+    </ng-template>
+</div>
 </div>
 

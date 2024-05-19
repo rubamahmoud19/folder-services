@@ -24,4 +24,17 @@ export class CommentService {
             .toPromise()
             .then(res => <TreeNode[]>res.data);
         }
+    
+    getDocument(id: number){
+        return this.http.get(`${this.baseUrl}Document/Download/${id}`, {observe: 'response', responseType: 'blob'} )
+            .toPromise()
+            .then(res => <any> res);
+            
+    }
+    // getDocument(id: number){
+    //     return this.http.get(`${this.baseUrl}Document/Download/${id}`, {observe: 'response', responseType: 'blob'} )         
+    // }
+    
+
+    
 }

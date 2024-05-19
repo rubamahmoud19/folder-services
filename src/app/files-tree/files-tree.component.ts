@@ -28,6 +28,8 @@ import {CommentService} from './comment.service';
 import { TreeModule } from 'primeng/tree';
 import {TreeNode} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
+import { MessageService} from 'primeng/api';
+
 
 @Component({
   selector: 'app-files-tree',
@@ -45,6 +47,7 @@ import { PrimeNGConfig } from 'primeng/api';
   ],
   templateUrl: './files-tree.component.html',
   styleUrl: './files-tree.component.css',
+  providers: [MessageService]
 })
 
 export class FilesTreeComponent {
@@ -60,7 +63,7 @@ export class FilesTreeComponent {
   // @ViewChild("outlet", {read: ViewContainerRef}) outletRef: ViewContainerRef | any;
   // @ViewChild("container2", {read: TemplateRef}) contentRef: TemplateRef<any> | any;
   files1: TreeNode[] = [];
-
+  selectedFile!: TreeNode;
   // private _transformer = (node: FilesNode, level: number) => {
   //   return {
   //     expandable: !!node.children && node.children.length > 0,
@@ -72,9 +75,11 @@ export class FilesTreeComponent {
   // };
 
   private baseUrl = 'https://localhost:44361/api/';
+  
 
-  constructor(private commentService: CommentService) {
-    // debugger
+  
+  constructor(private commentService: CommentService, private messageService: MessageService) {
+
     // this.commentService.getFolders().subscribe((x)=>{
     //   debugger
     //   this.dataSource.data = x.data;
@@ -85,6 +90,48 @@ export class FilesTreeComponent {
 
   ngOnInit() {
     this.commentService.getFiles().then(files => this.files1 = files);
+
+    
+  }
+  @ViewChild("outlet", {read: ViewContainerRef}) outletRef: ViewContainerRef | any;
+  @ViewChild("container2", {read: TemplateRef}) contentRef: TemplateRef<any> | any;
+  public loadComponentChild: boolean | undefined;
+  public componentChildType: string | undefined;
+  passedData: string | undefined;
+  loadComponent() {
+    // this.container2?.detach()
+    // this.container2?.clear();
+    // this.container2?.remove()
+    // console.log(this.container2?.length)
+    // this.container2?.createEmbeddedView
+
+    // this.outletRef.clear();
+    // this.outletRef.createEmbeddedView(this.contentRef);
+
+    //console.log(node);
+    // this.loadComponentChild = false;
+    // this.componentChildType = undefined;
+    // this.passedData = undefined;
+
+    // this.loadComponentChild = true;
+    // this.commentService.getDocument(3).then(data => {this.downloadFile(data, "8a64ff4d-9775-4dbc-b0ba-db2b879864ae.pdf");
+    // const blob = new Blob([data], { type: 'application/octet-stream' });
+    // const url = window.URL.createObjectURL(blob);
+    // // a.download = "8a64ff4d-9775-4dbc-b0ba-db2b879864ae.pdf";
+    // this.componentChildType = 'file';
+    // this.passedData = url;
+    // console.log(this.passedData);
+    // })
+    
+    // if (node?.type == 'media') {
+    //   this.componentChildType = 'media';
+    //   this.passedData = node.url;
+    //   console.log("tttt", this.passedData);
+    // } else {
+
+      console.log(this.passedData);
+   // }
+
   }
 
 expandAll(){
@@ -107,6 +154,41 @@ private expandRecursive(node:TreeNode, isExpand:boolean){
         } );
     }
 }
+
+nodeSelect(event: any) {
+
+  console.log("on select", event.node.type)
+  if(event.node.type == "file"){
+    this.commentService.getDocument(event.node.id)
+    .then(blob => this.downloadFile(blob, event.node.label))
+    .catch(error => console.error('Error fetching document:', error));
+
+  }
+  else {
+      console.log("errors");
+  }
+}
+
+downloadFile(data: Blob, filename: string): void {
+  console.log("rrr", filename);
+  const blob = new Blob([data], { type: 'application/octet-stream' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  window.URL.revokeObjectURL(url);
+}
+
+displayFile(data: Blob){
+  // var blob = new Blob([data], { type: 'application/octet-stream' });
+  let blob:Blob= data as Blob;
+  var url = window.URL.createObjectURL(blob);
+  // window.open(url);
+  window.open(url);
+}
+
+
   // ngAfterContentInit() {
   //   this.outletRef.createEmbeddedView(this.contentRef);
   // }
