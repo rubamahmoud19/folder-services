@@ -51,17 +51,15 @@ import { MessageService} from 'primeng/api';
 })
 
 export class FilesTreeComponent {
-  // public loadComponentChild: boolean | undefined;
-  // public componentChildType: string | undefined;
-  // passedData: string | undefined;
-  // @ViewChild('container', { read: ViewContainerRef }) container:
-  //   | ViewContainerRef
-  //   | undefined;
-  // // @ViewChild('container2', { read: ViewContainerRef }) container2:
-  // //   | ViewContainerRef
-  // //   | undefined;
-  // @ViewChild("outlet", {read: ViewContainerRef}) outletRef: ViewContainerRef | any;
-  // @ViewChild("container2", {read: TemplateRef}) contentRef: TemplateRef<any> | any;
+  passedData: string | undefined;
+  public componentChildType: string | undefined;
+  @ViewChild('container', { read: ViewContainerRef }) container:
+  | ViewContainerRef
+  | undefined;
+  
+  @ViewChild("outlet", {read: ViewContainerRef}) outletRef: ViewContainerRef | any;
+  @ViewChild("container2", {read: TemplateRef}) contentRef: TemplateRef<any> | any;
+  
   files1: TreeNode[] = [];
   selectedFile!: TreeNode;
   // private _transformer = (node: FilesNode, level: number) => {
@@ -90,14 +88,9 @@ export class FilesTreeComponent {
 
   ngOnInit() {
     this.commentService.getFiles().then(files => this.files1 = files);
-
-    
   }
-  @ViewChild("outlet", {read: ViewContainerRef}) outletRef: ViewContainerRef | any;
-  @ViewChild("container2", {read: TemplateRef}) contentRef: TemplateRef<any> | any;
-  public loadComponentChild: boolean | undefined;
-  public componentChildType: string | undefined;
-  passedData: string | undefined;
+
+
   loadComponent() {
     // this.container2?.detach()
     // this.container2?.clear();
@@ -156,6 +149,9 @@ private expandRecursive(node:TreeNode, isExpand:boolean){
 }
 
 nodeSelect(event: any) {
+  this.outletRef.clear();
+  this.passedData = undefined;
+  this.outletRef.createEmbeddedView(this.contentRef);
 
   console.log("on select", event.node.type)
   if(event.node.type == "file"){
@@ -170,11 +166,11 @@ nodeSelect(event: any) {
 }
 
 downloadFile(data: Blob, filename: string): void {
-  console.log("rrr", filename);
   const blob = new Blob([data], { type: 'application/octet-stream' });
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
+  console.log("------------", url);
   a.download = filename;
   a.click();
   window.URL.revokeObjectURL(url);
