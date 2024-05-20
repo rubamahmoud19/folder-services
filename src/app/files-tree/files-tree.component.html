@@ -13,9 +13,9 @@
   </div>
   <!-- <div class = "vertical-line"></div> -->
   <div class="col-12 md:col-6 p-6 flex align-items-top overflow-hidden">
-    <div>
-      <ng-container #outlet >
-      </ng-container>
+     <div>
+       <ng-container #outlet >
+       </ng-container>
     </div>
 
     <ng-template  #container2>
@@ -27,6 +27,13 @@
     <ng-template #container2 #mediaReader>
       <app-video-player [externalSource]="passedData"></app-video-player>
     </ng-template>
-</div>
+    </div>
+    <div class = "content" role = "main">
+      <div #viewer class="webviewer">
+
+      </div>
+
+    </div>
+
 </div>
 
