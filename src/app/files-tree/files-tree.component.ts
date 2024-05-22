@@ -1,13 +1,10 @@
 import {
   Component,
-  ComponentFactory,
-  ComponentFactoryResolver,
   OnInit,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { FlatTreeControl } from '@angular/cdk/tree';
 import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
@@ -29,7 +26,8 @@ import { TreeModule } from 'primeng/tree';
 import {TreeNode} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { MessageService} from 'primeng/api';
-
+import { AddFolderComponent } from '../add-folder/add-folder.component';
+// import { AddFolderComponent } from '../add-folder/add-folder.component';
 
 @Component({
   selector: 'app-files-tree',
@@ -38,6 +36,7 @@ import { MessageService} from 'primeng/api';
     CommonModule,
     VideoPlayerComponent,
     FilesReaderComponent,
+    AddFolderComponent,
     MatTreeModule,
     MatIconModule,
     MatButtonModule,
@@ -52,6 +51,7 @@ import { MessageService} from 'primeng/api';
 
 export class FilesTreeComponent {
   passedData: string | undefined;
+  companyID: string | undefined;
   public componentChildType: string | undefined;
   @ViewChild('container', { read: ViewContainerRef }) container:
   | ViewContainerRef
@@ -59,110 +59,61 @@ export class FilesTreeComponent {
   
   @ViewChild("outlet", {read: ViewContainerRef}) outletRef: ViewContainerRef | any;
   @ViewChild("container2", {read: TemplateRef}) contentRef: TemplateRef<any> | any;
+  @ViewChild(AddFolderComponent) addFolderComponent!: AddFolderComponent;
   
-  files1: TreeNode[] = [];
+  files!: TreeNode<any>[];
   selectedFile!: TreeNode;
-  // private _transformer = (node: FilesNode, level: number) => {
-  //   return {
-  //     expandable: !!node.children && node.children.length > 0,
-  //     name: node.name,
-  //     level: level,
-  //     type: node.type,
-  //     url: node.url,
-  //   };
-  // };
-
-  private baseUrl = 'https://localhost:44361/api/';
-  
 
   
-  constructor(private commentService: CommentService, private messageService: MessageService) {
-
-    // this.commentService.getFolders().subscribe((x)=>{
-    //   debugger
-    //   this.dataSource.data = x.data;
-    //   console.log(this.dataSource.data)
-    // });
-  }
-
+  constructor(private commentService: CommentService, private messageService: MessageService) {}
 
   ngOnInit() {
-    this.commentService.getFiles().then(files => this.files1 = files);
+    this.commentService.getFiles().then((data) => (this.files = data));
   }
 
+  loadComponent() {}
 
-  loadComponent() {
-    // this.container2?.detach()
-    // this.container2?.clear();
-    // this.container2?.remove()
-    // console.log(this.container2?.length)
-    // this.container2?.createEmbeddedView
-
-    // this.outletRef.clear();
-    // this.outletRef.createEmbeddedView(this.contentRef);
-
-    //console.log(node);
-    // this.loadComponentChild = false;
-    // this.componentChildType = undefined;
-    // this.passedData = undefined;
-
-    // this.loadComponentChild = true;
-    // this.commentService.getDocument(3).then(data => {this.downloadFile(data, "8a64ff4d-9775-4dbc-b0ba-db2b879864ae.pdf");
-    // const blob = new Blob([data], { type: 'application/octet-stream' });
-    // const url = window.URL.createObjectURL(blob);
-    // // a.download = "8a64ff4d-9775-4dbc-b0ba-db2b879864ae.pdf";
-    // this.componentChildType = 'file';
-    // this.passedData = url;
-    // console.log(this.passedData);
-    // })
-    
-    // if (node?.type == 'media') {
-    //   this.componentChildType = 'media';
-    //   this.passedData = node.url;
-    //   console.log("tttt", this.passedData);
-    // } else {
-
-      console.log(this.passedData);
-   // }
-
+  displayFolderForm(event: any) {
+    this.addFolderComponent.visible = !this.addFolderComponent.visible;
+    this.addFolderComponent.folderName = event.label;
+    this.addFolderComponent.parentFolderId = event.key;
   }
+// collapseAll(){
+//     this.files.forEach( node => {
+//         this.expandRecursive(node, false);
+//     } );
+// }
 
-expandAll(){
-    this.files1.forEach( node => {
-        this.expandRecursive(node, true);
-    } );
+// private expandRecursive(node:TreeNode, isExpand:boolean){
+//     node.expanded = isExpand;
+//     if (node.children){
+//         node.children.forEach( childNode => {
+//             this.expandRecursive(childNode, isExpand);
+//         } );
+//     }
+// }
+
+addFile(event: any) {
+
+  console.log(event.label);
+  // this.outletRef.clear();
+  // this.passedData = undefined;
+  // this.outletRef.createEmbeddedView(this.contentRef);
+
+  // console.log("on select", event.node.type)
+  // if(event.node.type == "file"){
+  //   this.commentService.getDocument(event.node.id)
+  //   .then(blob => this.downloadFile(blob, event.node.label))
+  //   .catch(error => console.error('Error fetching document:', error));
+
+  // }
+  // else {
+  //     console.log("errors");
+  // }
 }
 
-collapseAll(){
-    this.files1.forEach( node => {
-        this.expandRecursive(node, false);
-    } );
-}
+addFolder(event: any){
 
-private expandRecursive(node:TreeNode, isExpand:boolean){
-    node.expanded = isExpand;
-    if (node.children){
-        node.children.forEach( childNode => {
-            this.expandRecursive(childNode, isExpand);
-        } );
-    }
-}
-
-nodeSelect(event: any) {
-  this.outletRef.clear();
-  this.passedData = undefined;
-  this.outletRef.createEmbeddedView(this.contentRef);
-
-  console.log("on select", event.node.type)
-  if(event.node.type == "file"){
-    this.commentService.getDocument(event.node.id)
-    .then(blob => this.downloadFile(blob, event.node.label))
-    .catch(error => console.error('Error fetching document:', error));
-
-  }
-  else {
-      console.log("errors");
-  }
 }
 
 downloadFile(data: Blob, filename: string): void {
@@ -170,7 +121,6 @@ downloadFile(data: Blob, filename: string): void {
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  console.log("------------", url);
   a.download = filename;
   a.click();
   window.URL.revokeObjectURL(url);

@@ -16,25 +16,35 @@ export class CommentService {
     // }
     getFiles() {
         return this.http.get<any>(`${this.baseUrl}Folder/GetFoldersByCompanyId?companyId=1`)
-        .toPromise().then(res => <TreeNode[]>res.data);
+        .toPromise().then(res => <any[]>res.data);
         }
 
     getLazyFiles() {
         return this.http.get<any>(`${this.baseUrl}Folder/GetFoldersByCompanyId?companyId=1`)
             .toPromise()
-            .then(res => <TreeNode[]>res.data);
+            .then(res => <any>res.data);
         }
     
     getDocument(id: number){
         return this.http.get(`${this.baseUrl}Document/Download/${id}`, {observe: 'response', responseType: 'blob'} )
             .toPromise()
-            .then(res => <any> res);
-            
+            .then(res => <any> res);    
     }
+
     // getDocument(id: number){
     //     return this.http.get(`${this.baseUrl}Document/Download/${id}`, {observe: 'response', responseType: 'blob'} )         
     // }
     
+    saveFolder(body: any){
+        const headers = { 'Content-Type': 'application/json'};
+        return this.http.post<any>(`${this.baseUrl}Folder/CreateFolder`, body, {headers});
+    }
 
+
+
+    
+    // getFiles() {
+    //     return Promise.resolve(this.getTreeNodesData());
+    // }
     
 }

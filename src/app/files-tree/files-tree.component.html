@@ -1,16 +1,27 @@
-
-
-
 <div class="grid grid-nogutter surface-section text-800  full-height">
   <div class="col-12 md:col-3 p-6 text-center md:text-left flex border-right full-height" >
-      <section>
+      <!-- <section>
             <p-tree 
             [value]="files1" 
             selectionMode="single"
             [(selection)]="selectedFile"
             (onNodeSelect)="nodeSelect($event)" />
-      </section>
+      </section> -->
+      <div class="card flex justify-content-center">
+        <div class="card flex justify-content-center">
+          <p-tree class="w-full md:w-30rem" [value]="files">
+            <ng-template let-node pTemplate="default">
+              <span>{{node.label}}</span>
+              <span *ngIf="node.icon == 'fa fa-folder'">
+                <span (click)="displayFolderForm(node)" class = 'p-3 pi pi-folder-plus'></span>
+                <span (click)="addFile(node)" class = 'pi pi-file-plus'></span>
+              </span>
+            </ng-template>
+          </p-tree>
+        </div>
+      </div>
   </div>
+
   <!-- <div class = "vertical-line"></div> -->
   <div class="col-12 md:col-6 p-6 flex align-items-top overflow-hidden">
      <div>
@@ -19,13 +30,13 @@
     </div>
 
     <ng-template  #container2>
-      <div *ngIf='componentChildType  === "file";else mediaReader'>
-        <app-files-reader [externalSource]="passedData"></app-files-reader>
-      </div>
+      <!-- <div *ngIf='componentChildType  === "file";else mediaReader'> -->
+        <!-- <app-files-reader [externalSource]="passedData"></app-files-reader> -->
+      <!-- </div> -->
     </ng-template>
 
     <ng-template #container2 #mediaReader>
-      <app-video-player [externalSource]="passedData"></app-video-player>
+      <!-- <app-video-player [externalSource]="passedData"></app-video-player> -->
     </ng-template>
     </div>
     <div class = "content" role = "main">
@@ -34,6 +45,12 @@
       </div>
 
     </div>
+
+    <add-folder>
+
+    </add-folder>
+</div>
+<div>
 
 </div>
 

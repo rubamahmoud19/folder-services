@@ -1,0 +1,16 @@
+<div class="card flex justify-content-center">
+    <p-dialog header="Create new folder in {{folderName}}" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+        <form #createfolder = "ngForm" (ngSubmit) = "createFolder(createfolder.value, createfolder)">
+            <span class="p-text-secondary block mb-5">Folder Name</span>
+            <div class="flex align-items-center gap-3 mb-5">
+                <input pInputText name="name" class="flex-auto" autocomplete="off" ngModel required />
+                <input type="hidden" name="parentId"  [ngModel]="parentFolderId"/>
+            </div>
+           <div style="color: red;"> {{errorMessage}}</div>
+            <div class="flex justify-content-end gap-2">
+                <p-button label="Cancel" severity="secondary" (click)="visible = false; createfolder.reset();errorMessage = ''" />
+                <p-button label="Save" type = "submit"/>   
+            </div>
+        </form>  
+    </p-dialog>
+</div>

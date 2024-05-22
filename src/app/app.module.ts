@@ -16,12 +16,19 @@ import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import {TreeModule} from 'primeng/tree';
 import {ButtonModule} from 'primeng/button';
+import { AddFolderComponent } from './add-folder/add-folder.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//import { AddFolderComponent } from './add-folder/add-folder.component';
 // import {TreeNode} from 'primeng/api';
+import { DialogModule } from 'primeng/dialog'
+import { ImportsModule } from './imports';
 @NgModule({
   declarations: [
     AppComponent,
+    // AddFolderComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     CommonModule,
@@ -35,14 +42,18 @@ import {ButtonModule} from 'primeng/button';
     FilesReaderComponent,
     VideoPlayerComponent,
     FilesTreeComponent,
+    // AddFolderComponent,
     HttpClientModule,
     TreeModule,
+    DialogModule,ImportsModule
   ],
 
   exports: [
     FilesReaderComponent,
     VideoPlayerComponent,
     FilesTreeComponent,
+    //AddFolderComponent,
+
   ],
   providers: [],
   bootstrap: [AppComponent],
